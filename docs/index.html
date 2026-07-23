@@ -2,49 +2,124 @@
 <html lang="th">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
 <title>กำหนดการ · E-Safety Lab</title>
-<link rel="stylesheet" href="style.css">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#0f172a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="กำหนดการ">
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{background:#f1f5f9;font-family:"Segoe UI",system-ui,"Noto Sans Thai",sans-serif;color:#0f172a}
+  .hidden{display:none!important}
+  /* login */
+  #gate{position:fixed;inset:0;display:grid;place-items:center;background:radial-gradient(circle at 50% 20%,#1e293b,#0f172a);z-index:100}
+  .gc{background:#1e293b;border:1px solid #334155;border-radius:16px;padding:30px 26px;width:290px;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,.4)}
+  .gc .lg{font-size:42px}
+  .gc h1{color:#e2e8f0;margin:6px 0 2px;font-size:21px}
+  .gc p{color:#94a3b8;margin:0 0 16px;font-size:13px}
+  .gc input{width:100%;padding:11px 12px;border-radius:9px;border:1px solid #334155;background:#0f172a;color:#e2e8f0;font-size:15px}
+  .gc button{width:100%;margin-top:11px;padding:11px;border:0;border-radius:9px;background:#0ea5e9;color:#fff;font-size:15px;font-weight:600}
+  .gc .err{color:#f87171;font-size:13px;min-height:18px;margin-top:8px}
+  /* shell */
+  #appbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:10px;padding:10px 14px;
+    background:#0f172a;color:#fff;padding-top:calc(10px + env(safe-area-inset-top))}
+  #appbar .ttl{font-weight:700;font-size:16px;flex:1}
+  #appbar button{background:#1e293b;border:1px solid #334155;color:#fff;width:34px;height:34px;border-radius:8px;font-size:16px}
+  main#page-content{padding:12px 12px 90px;max-width:1100px;margin:0 auto}
+  /* bottom tabs */
+  #tabs{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;background:#fff;border-top:1px solid #e2e8f0;
+    padding-bottom:env(safe-area-inset-bottom)}
+  #tabs button{flex:1;background:none;border:0;padding:8px 4px 6px;color:#64748b;font-size:11px;display:flex;flex-direction:column;align-items:center;gap:3px}
+  #tabs button.active{color:#0ea5e9}
+  #tabs .ic{font-size:19px}
+  .soon{padding:60px 20px;text-align:center;color:#64748b}
+  .soon .em{font-size:44px}
+</style>
 </head>
 <body>
 
-<!-- ===== หน้าล็อกอิน ===== -->
-<div id="login" class="login">
-  <div class="login-card">
-    <div class="login-logo">📆</div>
+<!-- login gate (รหัสร่วม) -->
+<div id="gate">
+  <div class="gc">
+    <div class="lg">📆</div>
     <h1>กำหนดการ</h1>
-    <p class="muted">E-Safety Lab · คลาวด์</p>
-    <input id="tokenInput" type="password" placeholder="รหัสเข้าใช้งาน" autocomplete="current-password">
-    <button id="loginBtn">เข้าใช้งาน</button>
-    <div id="loginErr" class="err"></div>
+    <p>E-Safety Lab · คลาวด์</p>
+    <input id="tok" type="password" placeholder="รหัสเข้าใช้งาน" autocomplete="current-password">
+    <button id="gbtn">เข้าใช้งาน</button>
+    <div id="gerr" class="err"></div>
   </div>
 </div>
 
-<!-- ===== แอปหลัก ===== -->
-<div id="app" class="app hidden">
-  <header class="topbar">
-    <div class="brand">📆 กำหนดการ</div>
-    <nav class="tabs">
-      <button class="tab active" data-view="calendar">📆 ปฏิทินงาน</button>
-      <button class="tab" data-view="plan">🗓️ แผนงาน</button>
-      <button class="tab" data-view="status">📋 สถานะงาน</button>
-    </nav>
-    <div class="topbar-right">
-      <span id="syncState" class="sync"></span>
-      <button id="reloadBtn" class="icon-btn" title="โหลดใหม่">⟳</button>
-      <button id="logoutBtn" class="icon-btn" title="ออก">⎋</button>
-    </div>
+<!-- app -->
+<div id="app" class="hidden">
+  <header id="appbar">
+    <div class="ttl" id="ttl">📋 สถานะงาน</div>
+    <button id="reload" title="โหลดใหม่">⟳</button>
+    <button id="logout" title="ออก">⎋</button>
   </header>
-
-  <main id="content"></main>
+  <main id="page-content"></main>
+  <nav id="tabs">
+    <button data-view="worktrack" class="active"><span class="ic">📋</span>สถานะงาน</button>
+    <button data-view="workcal"><span class="ic">📆</span>ปฏิทิน</button>
+    <button data-view="workplan"><span class="ic">🗓️</span>แผนงาน</button>
+  </nav>
 </div>
 
-<div id="toast" class="toast hidden"></div>
-
 <script src="config.js"></script>
-<script src="api.js"></script>
-<script src="app.js"></script>
+<script src="wt-shim.js"></script>
+<script src="worktrack.js"></script>
+<script>
+(function(){
+  const $=s=>document.querySelector(s);
+  const TITLES={worktrack:'📋 สถานะงาน',workcal:'📆 ปฏิทินงาน',workplan:'🗓️ แผนงาน'};
+  let view='worktrack';
+
+  async function checkToken(t){
+    try{const r=await fetch(CFG.API_URL+'?action=all&token='+encodeURIComponent(t)+'&_='+Date.now());
+      const j=await r.json();return j.ok===true;}catch(e){return false;}
+  }
+  function showApp(){ $('#gate').classList.add('hidden'); $('#app').classList.remove('hidden'); render(); }
+
+  async function doLogin(){
+    const t=$('#tok').value.trim();
+    if(!t){$('#gerr').textContent='ใส่รหัสก่อน';return;}
+    $('#gbtn').textContent='กำลังตรวจ...';
+    if(await checkToken(t)){ localStorage.setItem('sched_token',t); showApp(); }
+    else{ $('#gerr').textContent='รหัสไม่ถูกต้อง'; $('#gbtn').textContent='เข้าใช้งาน'; }
+  }
+  $('#gbtn').onclick=doLogin;
+  $('#tok').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
+  $('#logout').onclick=()=>{localStorage.removeItem('sched_token');location.reload();};
+  $('#reload').onclick=()=>render(true);
+
+  document.querySelectorAll('#tabs button').forEach(b=>b.onclick=()=>{
+    view=b.dataset.view;
+    document.querySelectorAll('#tabs button').forEach(x=>x.classList.toggle('active',x===b));
+    $('#ttl').textContent=TITLES[view];
+    render();
+  });
+
+  function render(){
+    const pc=$('#page-content');
+    if(view==='worktrack'){
+      pc.innerHTML='';
+      window.renderWorkTrack();               // worktrack.js ตัวจริง (ยิง /api/worktrack → shim → Sheet)
+    }else{
+      pc.innerHTML='<div class="soon"><div class="em">🚧</div>กำลังย้าย'+(view==='workcal'?'ปฏิทินงาน':'แผนงาน')+
+        'มาแบบเดียวกัน<br><small>(หน้าตา+ฟังก์ชันจาก Local เร็วๆ นี้)</small></div>';
+    }
+  }
+
+  // auto-enter ถ้ามี token เดิมและยังใช้ได้
+  (async function(){
+    if(CFG.API_URL.startsWith('PASTE')){$('#gerr').textContent='ยังไม่ตั้ง API_URL';return;}
+    const t=localStorage.getItem('sched_token');
+    if(t && await checkToken(t)) showApp();
+  })();
+})();
+</script>
 </body>
 </html>

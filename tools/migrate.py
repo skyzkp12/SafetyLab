@@ -63,6 +63,7 @@ def build():
             "status": d.get("status", ""),
             "note": d.get("note", ""),
             "by": d.get("by", ""),
+            "ot": "TRUE" if d.get("ot") else "FALSE",
         })
     tabs["WorkCalendar_Days"] = day_rows
 
@@ -73,7 +74,10 @@ def build():
     # ---- Work Plan (slot ต่อเวลา) ----
     wp = load("workplan_data.json")
     plan_rows = []
+    planday_rows = []
     for date, d in wp.get("days", {}).items():
+        if d.get("ot"):
+            planday_rows.append({"date": date, "ot": "TRUE"})
         slots = d.get("slots", {})
         for time, s in slots.items():
             s1 = s.get("s1", {}) or {}
@@ -90,6 +94,7 @@ def build():
                 "s2_detail": s2.get("detail", ""),
             })
     tabs["WorkPlan"] = plan_rows
+    tabs["WorkPlan_Days"] = planday_rows
     return tabs
 
 def main():

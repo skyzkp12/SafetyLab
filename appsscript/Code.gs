@@ -39,8 +39,9 @@ const TABS = {
     'test_end','st_testresult','st_testreport','st_sent_admin','result','job_type'],
   WorkStatus_Companies: ['name','color'],
   WorkCalendar_Jobs: ['date','id','jobno','company','kind','urgent','note','status_next'],
-  WorkCalendar_Days: ['date','status','note','by'],
+  WorkCalendar_Days: ['date','status','note','by','ot'],
   WorkPlan: ['date','time','type','status','span','s1_title','s1_detail','s2_title','s2_detail'],
+  WorkPlan_Days: ['date','ot'],
   Holidays: ['date','name'],
 };
 
