@@ -25,6 +25,7 @@
 
 // ======= ตั้งค่า =======
 const SHARED_TOKEN = 'CHANGE_ME_ตั้งรหัสลับตรงนี้';  // รหัสร่วม ใช้ตัวเดียวทั้งทีม
+const SS_ID = 'PASTE_SHEET_ID';  // ID ของ Google Sheet (ส่วนกลางของ URL /d/<ID>/edit)
 
 // แท็บทั้งหมด + ลำดับคอลัมน์ (แถวหัว) — ปรับได้ ถ้าไม่มีแท็บจะถูกสร้างตอน setup()
 const TABS = {
@@ -90,8 +91,15 @@ function doPost(e) {
 // ======= core =======
 function authOK(tok) { return tok === SHARED_TOKEN; }
 
+function ssRoot() {
+  // ผูกกับ Sheet ด้วย ID (ใช้ได้ทั้งสคริปต์แบบ standalone และ bound)
+  return (typeof SS_ID === 'string' && SS_ID && SS_ID !== 'PASTE_SHEET_ID')
+    ? SpreadsheetApp.openById(SS_ID)
+    : SpreadsheetApp.getActiveSpreadsheet();
+}
+
 function sheetFor(tab) {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const ss = ssRoot();
   var ws = ss.getSheetByName(tab);
   if (!ws) {
     ws = ss.insertSheet(tab);
@@ -159,7 +167,7 @@ function json(obj) {
 function setup() {
   Object.keys(TABS).forEach(function(t){ sheetFor(t); });
   // ลบแท็บเริ่มต้น "Sheet1" ถ้าว่างและมีแท็บอื่นแล้ว
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const ss = ssRoot();
   const s1 = ss.getSheetByName('Sheet1');
   if (s1 && ss.getSheets().length > 1 && s1.getLastRow() === 0) ss.deleteSheet(s1);
   Logger.log('setup done: ' + Object.keys(TABS).join(', '));
