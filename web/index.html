@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>กำหนดการ · E-Safety Lab</title>
+<link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0f172a">
+</head>
+<body>
+
+<!-- ===== หน้าล็อกอิน ===== -->
+<div id="login" class="login">
+  <div class="login-card">
+    <div class="login-logo">📆</div>
+    <h1>กำหนดการ</h1>
+    <p class="muted">E-Safety Lab · คลาวด์</p>
+    <input id="tokenInput" type="password" placeholder="รหัสเข้าใช้งาน" autocomplete="current-password">
+    <button id="loginBtn">เข้าใช้งาน</button>
+    <div id="loginErr" class="err"></div>
+  </div>
+</div>
+
+<!-- ===== แอปหลัก ===== -->
+<div id="app" class="app hidden">
+  <header class="topbar">
+    <div class="brand">📆 กำหนดการ</div>
+    <nav class="tabs">
+      <button class="tab active" data-view="calendar">📆 ปฏิทินงาน</button>
+      <button class="tab" data-view="plan">🗓️ แผนงาน</button>
+      <button class="tab" data-view="status">📋 สถานะงาน</button>
+    </nav>
+    <div class="topbar-right">
+      <span id="syncState" class="sync"></span>
+      <button id="reloadBtn" class="icon-btn" title="โหลดใหม่">⟳</button>
+      <button id="logoutBtn" class="icon-btn" title="ออก">⎋</button>
+    </div>
+  </header>
+
+  <main id="content"></main>
+</div>
+
+<div id="toast" class="toast hidden"></div>
+
+<script src="config.js"></script>
+<script src="api.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

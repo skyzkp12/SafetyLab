@@ -1,0 +1,4 @@
+# ห้าม push ข้อมูลจริงขึ้น GitHub
+tools/seed.json
+*.local.js
+.DS_Store

@@ -1,0 +1,110 @@
+:root{
+  --bg:#0f172a; --panel:#1e293b; --panel2:#273449; --line:#334155;
+  --text:#e2e8f0; --muted:#94a3b8; --accent:#38bdf8; --accent2:#0ea5e9;
+  --ok:#22c55e; --warn:#f59e0b; --danger:#ef4444; --urgent:#fb7185;
+  --ip:#38bdf8; --ik:#a78bfa; --holiday:#f43f5e;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--text);font-family:"Segoe UI",system-ui,"Noto Sans Thai",sans-serif;font-size:14px}
+.hidden{display:none!important}
+.muted{color:var(--muted)}
+.err{color:var(--danger);min-height:18px;margin-top:8px;font-size:13px}
+button{cursor:pointer;font-family:inherit}
+
+/* ---- login ---- */
+.login{position:fixed;inset:0;display:grid;place-items:center;background:radial-gradient(circle at 50% 20%,#1e293b,#0f172a)}
+.login-card{background:var(--panel);padding:32px 28px;border-radius:16px;width:300px;text-align:center;border:1px solid var(--line);box-shadow:0 20px 50px rgba(0,0,0,.4)}
+.login-logo{font-size:44px}
+.login-card h1{margin:6px 0 0;font-size:22px}
+.login-card input{width:100%;margin-top:18px;padding:11px 12px;border-radius:9px;border:1px solid var(--line);background:var(--bg);color:var(--text);font-size:15px}
+.login-card button{width:100%;margin-top:12px;padding:11px;border:0;border-radius:9px;background:var(--accent2);color:#fff;font-size:15px;font-weight:600}
+.login-card button:hover{background:var(--accent)}
+
+/* ---- topbar ---- */
+.topbar{display:flex;align-items:center;gap:14px;padding:8px 14px;background:var(--panel);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20;flex-wrap:wrap}
+.brand{font-weight:700;font-size:16px}
+.tabs{display:flex;gap:6px;flex:1;flex-wrap:wrap}
+.tab{background:transparent;border:1px solid transparent;color:var(--muted);padding:7px 12px;border-radius:8px;font-size:14px}
+.tab.active{background:var(--panel2);color:var(--text);border-color:var(--line)}
+.tab:hover{color:var(--text)}
+.topbar-right{display:flex;align-items:center;gap:8px}
+.icon-btn{background:var(--panel2);border:1px solid var(--line);color:var(--text);width:34px;height:34px;border-radius:8px;font-size:16px}
+.icon-btn:hover{border-color:var(--accent)}
+.sync{font-size:12px;color:var(--muted)}
+.sync.dirty{color:var(--warn)}
+.sync.saving{color:var(--accent)}
+.sync.saved{color:var(--ok)}
+
+main{padding:14px;max-width:1200px;margin:0 auto}
+
+/* ---- generic ---- */
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.spacer{flex:1}
+.btn{background:var(--panel2);border:1px solid var(--line);color:var(--text);padding:7px 12px;border-radius:8px;font-size:13px}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent2);border-color:var(--accent2);color:#fff;font-weight:600}
+.btn.primary:hover{background:var(--accent)}
+.btn.danger{color:var(--danger);border-color:#7f1d1d}
+.pill{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600}
+select,input[type=text],input[type=date]{background:var(--bg);border:1px solid var(--line);color:var(--text);border-radius:7px;padding:6px 8px;font-family:inherit;font-size:13px}
+.section-title{font-size:15px;font-weight:700;margin:4px 0 10px}
+
+/* ---- calendar ---- */
+.cal-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.cal-dow{text-align:center;color:var(--muted);font-size:12px;padding:4px 0}
+.cal-cell{background:var(--panel);border:1px solid var(--line);border-radius:9px;min-height:92px;padding:5px 6px;display:flex;flex-direction:column;gap:3px;cursor:pointer;position:relative}
+.cal-cell:hover{border-color:var(--accent)}
+.cal-cell.other{opacity:.35}
+.cal-cell.today{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.cal-cell.holiday{background:#3b1220}
+.cal-cell.notest{background:#1c2536}
+.cal-date{font-size:12px;font-weight:600;color:var(--muted)}
+.cal-date .hname{color:var(--holiday);font-weight:500;margin-left:4px;font-size:10px}
+.cal-job{font-size:11px;padding:2px 5px;border-radius:5px;background:var(--panel2);border-left:3px solid var(--ip);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cal-job.ik{border-left-color:var(--ik)}
+.cal-job.urgent{background:#4c1d24;border-left-color:var(--urgent)}
+.notest-tag{font-size:10px;color:var(--warn)}
+
+/* ---- plan grid ---- */
+.plan-grid{display:flex;flex-direction:column;gap:4px}
+.plan-row{display:grid;grid-template-columns:70px 1fr 1fr 90px;gap:6px;align-items:center}
+.plan-time{color:var(--muted);font-size:12px;text-align:right}
+.plan-slot{background:var(--panel);border:1px solid var(--line);border-radius:7px;padding:6px 8px;min-height:34px}
+.plan-slot input{width:100%;border:0;background:transparent;color:var(--text);font-size:13px;padding:0}
+.plan-slot input:focus{outline:none}
+
+/* ---- status table ---- */
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;font-size:12.5px;white-space:nowrap}
+th,td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left}
+th{background:var(--panel2);position:sticky;top:0;font-size:11px;color:var(--muted);font-weight:600;z-index:1}
+tr:hover td{background:var(--panel)}
+td input,td select{width:100%;min-width:70px;background:transparent;border:0;color:var(--text);font-size:12.5px}
+td input:focus{outline:1px solid var(--accent);border-radius:4px}
+.chk{width:20px;height:20px;border:1px solid var(--line);border-radius:5px;display:inline-grid;place-items:center;cursor:pointer;font-size:13px}
+.chk.on{background:var(--ok);border-color:var(--ok);color:#052e16}
+.co-dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:4px;vertical-align:middle}
+.pin{cursor:pointer;opacity:.35}
+.pin.on{opacity:1}
+
+/* ---- toast ---- */
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--panel2);border:1px solid var(--line);padding:10px 18px;border-radius:10px;z-index:100;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+.toast.ok{border-color:var(--ok)}
+.toast.bad{border-color:var(--danger)}
+
+/* ---- modal ---- */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.55);display:grid;place-items:center;z-index:50}
+.modal{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;width:min(440px,92vw);max-height:88vh;overflow:auto}
+.modal h3{margin:0 0 12px}
+.modal .field{margin-bottom:10px;display:flex;flex-direction:column;gap:4px}
+.modal .field label{font-size:12px;color:var(--muted)}
+.modal .field input,.modal .field select{width:100%}
+
+@media(max-width:640px){
+  .plan-row{grid-template-columns:56px 1fr 70px}
+  .plan-slot.s2{display:none}
+  .cal-cell{min-height:70px}
+  main{padding:8px}
+}
