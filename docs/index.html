@@ -71,6 +71,8 @@
 <script src="config.js"></script>
 <script src="wt-shim.js"></script>
 <script src="worktrack.js"></script>
+<script src="workcal-shim.js"></script>
+<script src="workcal.js"></script>
 <script>
 (function(){
   const $=s=>document.querySelector(s);
@@ -107,9 +109,12 @@
     if(view==='worktrack'){
       pc.innerHTML='';
       window.renderWorkTrack();               // worktrack.js ตัวจริง (ยิง /api/worktrack → shim → Sheet)
+    }else if(view==='workcal'){
+      pc.innerHTML='';
+      window.renderWorkCalendar();            // workcal.js ตัวจริง (ยิง /api/workcal → shim → Sheet)
     }else{
-      pc.innerHTML='<div class="soon"><div class="em">🚧</div>กำลังย้าย'+(view==='workcal'?'ปฏิทินงาน':'แผนงาน')+
-        'มาแบบเดียวกัน<br><small>(หน้าตา+ฟังก์ชันจาก Local เร็วๆ นี้)</small></div>';
+      pc.innerHTML='<div class="soon"><div class="em">🚧</div>กำลังย้ายแผนงานมาแบบเดียวกัน<br>'+
+        '<small>(หน้าตา+ฟังก์ชันจาก Local เร็วๆ นี้)</small></div>';
     }
   }
 
