@@ -37,6 +37,8 @@
   #tabs .ic{font-size:19px}
   .soon{padding:60px 20px;text-align:center;color:#64748b}
   .soon .em{font-size:44px}
+  /* Export Excel ต้องมี Flask/openpyxl — คลาวด์ไม่มีเซิร์ฟเวอร์ จึงซ่อนบนมือถือ */
+  #wp-exp-day,#wp-exp-month{display:none!important}
 </style>
 </head>
 <body>
@@ -73,6 +75,8 @@
 <script src="worktrack.js"></script>
 <script src="workcal-shim.js"></script>
 <script src="workcal.js"></script>
+<script src="workplan-shim.js"></script>
+<script src="workplan.js"></script>
 <script>
 (function(){
   const $=s=>document.querySelector(s);
@@ -113,8 +117,8 @@
       pc.innerHTML='';
       window.renderWorkCalendar();            // workcal.js ตัวจริง (ยิง /api/workcal → shim → Sheet)
     }else{
-      pc.innerHTML='<div class="soon"><div class="em">🚧</div>กำลังย้ายแผนงานมาแบบเดียวกัน<br>'+
-        '<small>(หน้าตา+ฟังก์ชันจาก Local เร็วๆ นี้)</small></div>';
+      pc.innerHTML='';
+      window.renderWorkPlan();                // workplan.js ตัวจริง (ยิง /api/workplan → shim → Sheet)
     }
   }
 
